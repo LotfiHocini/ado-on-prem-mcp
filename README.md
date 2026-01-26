@@ -45,18 +45,11 @@ In your project, add a `.vscode\mcp.json` file and setup environment varibales w
 
 ```json
 {
-  "inputs": [
-    {
-      "id": "ado_org",
-      "type": "promptString",
-      "description": "Azure DevOps organization name"
-    }
-  ],
   "servers": {
     "ado-on-prem-mcp": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@lotfihoc/ado-on-prem-mcp", "${input:ado_org}"],
+      "args": ["-y", "@lotfihoc/ado-on-prem-mcp", "<your_devops_project_name>", "--authentication", "envvar"],
       "env": {
         "LOG_LEVEL": "info",
         "ADO_MCP_MODE": "onprem",
@@ -135,18 +128,11 @@ setx ADO_MCP_AUTH_TOKEN "<pat_token>"`
 
 ```json
 {
-  "inputs": [
-    {
-      "id": "ado_org",
-      "type": "promptString",
-      "description": "Azure DevOps organization name"
-    }
-  ],
   "servers": {
     "ado-on-prem-mcp": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@lotfihoc/ado-on-prem-mcp@next", "${input:ado_org}"],
+      "args": ["-y", "@lotfihoc/ado-on-prem-mcp", "<your_devops_project_name>", "--authentication", "envvar"],
       "env": {
         "LOG_LEVEL": "info",
         "ADO_MCP_MODE": "onprem",
@@ -190,18 +176,11 @@ For example, use `"-d", "core", "work", "work-items"` to load only Work Item rel
 
 ```json
 {
-  "inputs": [
-    {
-      "id": "ado_org",
-      "type": "promptString",
-      "description": "Azure DevOps organization name"
-    }
-  ],
   "servers": {
     "ado-on-prem-mcp-with-filtered-domains": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@lotfihoc/ado-on-prem-mcp", "${input:ado_org}", "-d", "core", "work", "work-items"]
+      "args": ["-y", "@lotfihoc/ado-on-prem-mcp", "<your_devops_project_name>", "-d", "core", "work", "work-items", "--authentication", "envvar"],
       "env": {
         "LOG_LEVEL": "info",
         "ADO_MCP_MODE": "onprem",
@@ -216,7 +195,6 @@ For example, use `"-d", "core", "work", "work-items"` to load only Work Item rel
     }
   }
 }
-
 ```
 
 Domains that are available are: `core`, `work`, `work-items`, `search`, `test-plans`, `repositories`, `wiki`, `pipelines`, `advanced-security`
