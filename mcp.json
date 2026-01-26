@@ -1,16 +1,9 @@
 {
-  "inputs": [
-    {
-      "id": "ado_org",
-      "type": "promptString",
-      "description": "Azure DevOps organization name / On premises DevOps Collection name"
-    }
-  ],
   "servers": {
     "ado_op": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@lotfihoc/ado-on-prem-mcp", "${input:ado_org}", "--authentication", "envvar"],
+      "args": ["-y", "@lotfihoc/ado-on-prem-mcp", "<your_ad_project_name>", "--authentication", "envvar"],
       "env": {
         "LOG_LEVEL": "debug",
         "ADO_MCP_MODE": "onprem",
