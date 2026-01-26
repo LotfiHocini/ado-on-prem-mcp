@@ -4,101 +4,6 @@ This project provides a lightweight server to interact with on-premises Azure De
 
 Forked from [web-marketing-hr](https://www.npmjs.com/package/@web-marketing-hr/azure-devops-mcp), which itself is a fork of [Microsoft's Azure DevOps MCP](https://github.com/microsoft/azure-devops-mcp)
 
-### Environment variables
-
-- `ADO_MCP_AUTH_TOKEN`:
-  - DevOps Personal Access Token (PAT)
-- `ADO_MCP_MODE`:
-  - Whether Azure DevOps is on-premises or in the cloud
-  - `"cloud"` (default) or `"onprem"`
-- `ADO_MCP_AUTH_TYPE`
-  - DevOps authentication mode
-  - `"bearer"` (default) or `"basic"`
-- `ADO_MCP_ORG_URL`:
-  - Full URL of the on-premises instance, for example:
-    `https://my-server/tfs/MyCollection`
-- `ADO_MCP_API_VERSION`:
-  - Set Azure DevOps API version
-  - default: `"6.0-preview"`
-- `ADO_MCP_BATCH_API_VERSION`:
-  - Set Azure DevOps Batch API version
-  - default: `"6.0-preview"`
-- `ADO_MCP_MARKDOWN_COMMENTS_API_VERSION`:
-  - Set Azure DevOps Markdown API version
-  - default: `"5.0"`
-
-### Set environment variables in mcp.json
-
-You can set environment variables in `mcp.json`, for example:
-
-```json
-{
-  "servers": {
-    "ado-on-prem-mcp": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "@lotfihoc/ado-on-prem-mcp", "<your_devops_project_name>", "--authentication", "envvar"],
-      "env": {
-        "LOG_LEVEL": "info",
-        "ADO_MCP_MODE": "onprem",
-        "ADO_MCP_AUTH_TYPE": "basic",
-        "ADO_MCP_ORG_URL": "https://<on-prem-host>/tfs/<collection_name>",
-        "ADO_MCP_API_VERSION": "6.0",
-        "ADO_MCP_BATCH_API_VERSION": "6.0",
-        "ADO_MCP_MARKDOWN_COMMENTS_API_VERSION": "5.0",
-        "NODE_EXTRA_CA_CERTS": "your_cert_path", // make this availble system wide if needed
-        "ADO_MCP_AUTH_TOKEN": "your_ado_pat" // make this availble system wide
-      }
-    }
-  }
-}
-```
-
-If you are using continue dev on vscode, you can use this config
-
-```yaml
-mcpServers:
-  - name: ado-on-prem-mcp
-    type: stdio
-    command: npx
-    args:
-      - -y
-      - "@lotfihoc/ado-on-prem-mcp"
-      - "<your_devops_project_name>"
-      - "--authentication"
-      - "envvar"
-    env:
-      LOG_LEVEL: "info"
-      ADO_MCP_MODE: "onprem"
-      ADO_MCP_AUTH_TYPE: "basic"
-      ADO_MCP_ORG_URL: "https://<on-prem-host>/tfs/<collection_name>"
-      ADO_MCP_API_VERSION: "6.0"
-      ADO_MCP_BATCH_API_VERSION: "6.0"
-      ADO_MCP_MARKDOWN_COMMENTS_API_VERSION: "5.0"
-      ADO_MCP_AUTH_TOKEN: ${{ secrets.ADO_TOKEN }}
-      NODE_EXTRA_CA_CERTS: ${{ secrets.NODE_EXTRA_CA_CERTS }}
-```
-
-It's recommended to set `ADO_MCP_AUTH_TOKEN` in your terminal or command line. Windows example:
-
-```bat
-setx ADO_MCP_AUTH_TOKEN "<pat_token>"`
-```
-
-## Upstream README
-
-## 📄 Table of Contents
-
-1. [📺 Overview](#-overview)
-2. [🏆 Expectations](#-expectations)
-3. [⚙️ Supported Tools](#️-supported-tools)
-4. [🔌 Installation & Getting Started](#-installation--getting-started)
-5. [🌏 Using Domains](#-using-domains)
-6. [📝 Troubleshooting](#-troubleshooting)
-7. [🎩 Examples & Best Practices](#-examples--best-practices)
-8. [🙋‍♀️ Frequently Asked Questions](#️-frequently-asked-questions)
-9. [📌 Contributing](#-contributing)
-
 ## 📺 Overview
 
 The Azure DevOps MCP Server brings Azure DevOps context to your agents. Try prompts like:
@@ -136,22 +41,7 @@ For the best experience, use Visual Studio Code and GitHub Copilot. See the [get
 
 ### Installation
 
-#### ✨ One-Click Install
-
-[![Install with NPX in VS Code](https://img.shields.io/badge/VS_Code-Install_AzureDevops_MCP_Server-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=ado&config=%7B%20%22type%22%3A%20%22stdio%22%2C%20%22command%22%3A%20%22npx%22%2C%20%22args%22%3A%20%5B%22-y%22%2C%20%22%40azure-devops%2Fmcp%22%2C%20%22%24%7Binput%3Aado_org%7D%22%5D%7D&inputs=%5B%7B%22id%22%3A%20%22ado_org%22%2C%20%22type%22%3A%20%22promptString%22%2C%20%22description%22%3A%20%22Azure%20DevOps%20organization%20name%20%20%28e.g.%20%27contoso%27%29%22%7D%5D)
-[![Install with NPX in VS Code Insiders](https://img.shields.io/badge/VS_Code_Insiders-Install_AzureDevops_MCP_Server-24bfa5?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=ado&quality=insiders&config=%7B%20%22type%22%3A%20%22stdio%22%2C%20%22command%22%3A%20%22npx%22%2C%20%22args%22%3A%20%5B%22-y%22%2C%20%22%40azure-devops%2Fmcp%22%2C%20%22%24%7Binput%3Aado_org%7D%22%5D%7D&inputs=%5B%7B%22id%22%3A%20%22ado_org%22%2C%20%22type%22%3A%20%22promptString%22%2C%20%22description%22%3A%20%22Azure%20DevOps%20organization%20name%20%20%28e.g.%20%27contoso%27%29%22%7D%5D)
-
-After installation, select GitHub Copilot Agent Mode and refresh the tools list. Learn more about Agent Mode in the [VS Code Documentation](https://code.visualstudio.com/docs/copilot/chat/chat-agent-mode).
-
-#### 🧨 Install from Public Feed (Recommended)
-
-This installation method is the easiest for all users of Visual Studio Code.
-
-🎥 [Watch this quick start video to get up and running in under two minutes!](https://youtu.be/EUmFM6qXoYk)
-
-##### Steps
-
-In your project, add a `.vscode\mcp.json` file with the following content:
+In your project, add a `.vscode\mcp.json` file and setup environment varibales with the following content:
 
 ```json
 {
@@ -181,6 +71,64 @@ In your project, add a `.vscode\mcp.json` file with the following content:
     }
   }
 }
+```
+
+#### Environment variables
+
+- `ADO_MCP_AUTH_TOKEN`:
+  - DevOps Personal Access Token (PAT)
+- `ADO_MCP_MODE`:
+  - Whether Azure DevOps is on-premises or in the cloud
+  - `"cloud"` (default) or `"onprem"`
+- `ADO_MCP_AUTH_TYPE`
+  - DevOps authentication mode
+  - `"bearer"` (default) or `"basic"`
+- `ADO_MCP_ORG_URL`:
+  - Full URL of the on-premises instance, for example:
+    `https://my-server/tfs/MyCollection`
+- `ADO_MCP_API_VERSION`:
+  - Set Azure DevOps API version
+  - default: `"6.0-preview"`
+- `ADO_MCP_BATCH_API_VERSION`:
+  - Set Azure DevOps Batch API version
+  - default: `"6.0-preview"`
+- `ADO_MCP_MARKDOWN_COMMENTS_API_VERSION`:
+  - Set Azure DevOps Markdown API version
+  - default: `"5.0"`
+- `NODE_EXTRA_CA_CERTS`:
+  - Set this variable to your certifcat path if needed
+- `ADO_MCP_AUTH_TOKEN`:
+  - Ado PAT
+
+If you are using continue dev on vscode, you can use this config
+
+```yaml
+mcpServers:
+  - name: ado-on-prem-mcp
+    type: stdio
+    command: npx
+    args:
+      - -y
+      - "@lotfihoc/ado-on-prem-mcp"
+      - "<your_devops_project_name>"
+      - "--authentication"
+      - "envvar"
+    env:
+      LOG_LEVEL: "info"
+      ADO_MCP_MODE: "onprem"
+      ADO_MCP_AUTH_TYPE: "basic"
+      ADO_MCP_ORG_URL: "https://<on-prem-host>/tfs/<collection_name>"
+      ADO_MCP_API_VERSION: "6.0"
+      ADO_MCP_BATCH_API_VERSION: "6.0"
+      ADO_MCP_MARKDOWN_COMMENTS_API_VERSION: "5.0"
+      ADO_MCP_AUTH_TOKEN: ${{ secrets.ADO_TOKEN }}
+      NODE_EXTRA_CA_CERTS: ${{ secrets.NODE_EXTRA_CA_CERTS }}
+```
+
+It's recommended to set `ADO_MCP_AUTH_TOKEN` in your terminal or command line. Windows example:
+
+```bat
+setx ADO_MCP_AUTH_TOKEN "<pat_token>"`
 ```
 
 🔥 To stay up to date with the latest features, you can use our nightly builds. Simply update your `mcp.json` configuration to use `@lotfihoc/ado-on-prem-mcp@next`. Here is an updated example:
