@@ -37,7 +37,7 @@ You can set environment variables in `mcp.json`, for example:
 ```json
 {
   "servers": {
-    "ado_op": {
+    "ado-on-prem-mcp": {
       "type": "stdio",
       "command": "npx",
       "args": ["-y", "@lotfihoc/ado-on-prem-mcp", "<your_devops_project_name>", "--authentication", "envvar"],
@@ -166,10 +166,21 @@ In your project, add a `.vscode\mcp.json` file with the following content:
     }
   ],
   "servers": {
-    "ado": {
+    "ado-on-prem-mcp": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@lotfihoc/ado-on-prem-mcp", "${input:ado_org}"]
+      "args": ["-y", "@lotfihoc/ado-on-prem-mcp", "${input:ado_org}"],
+      "env": {
+        "LOG_LEVEL": "info",
+        "ADO_MCP_MODE": "onprem",
+        "ADO_MCP_AUTH_TYPE": "basic",
+        "ADO_MCP_ORG_URL": "https://<on-prem-host>/tfs/<collection_name>",
+        "ADO_MCP_API_VERSION": "6.0",
+        "ADO_MCP_BATCH_API_VERSION": "6.0",
+        "ADO_MCP_MARKDOWN_COMMENTS_API_VERSION": "5.0",
+        "NODE_EXTRA_CA_CERTS": "<path_to_cert>",
+        "ADO_MCP_AUTH_TOKEN": "<your_ado_pat>"
+      }
     }
   }
 }
@@ -187,10 +198,21 @@ In your project, add a `.vscode\mcp.json` file with the following content:
     }
   ],
   "servers": {
-    "ado": {
+    "ado-on-prem-mcp": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@lotfihoc/ado-on-prem-mcp@next", "${input:ado_org}"]
+      "args": ["-y", "@lotfihoc/ado-on-prem-mcp@next", "${input:ado_org}"],
+      "env": {
+        "LOG_LEVEL": "info",
+        "ADO_MCP_MODE": "onprem",
+        "ADO_MCP_AUTH_TYPE": "basic",
+        "ADO_MCP_ORG_URL": "https://<on-prem-host>/tfs/<collection_name>",
+        "ADO_MCP_API_VERSION": "6.0",
+        "ADO_MCP_BATCH_API_VERSION": "6.0",
+        "ADO_MCP_MARKDOWN_COMMENTS_API_VERSION": "5.0",
+        "NODE_EXTRA_CA_CERTS": "<path_to_cert>",
+        "ADO_MCP_AUTH_TOKEN": "<your_ado_pat>"
+      }
     }
   }
 }
@@ -219,27 +241,68 @@ Azure DevOps exposes a large surface area. As a result, our Azure DevOps MCP Ser
 
 For example, use `"-d", "core", "work", "work-items"` to load only Work Item related tools (see the example below).
 
+> By default all domains are loaded
+
 ```json
 {
   "inputs": [
     {
       "id": "ado_org",
       "type": "promptString",
-      "description": "Azure DevOps organization name  (e.g. 'contoso')"
+      "description": "Azure DevOps organization name"
     }
   ],
   "servers": {
-    "ado_with_filtered_domains": {
+    "ado-on-prem-mcp-with-filtered-domains": {
       "type": "stdio",
       "command": "npx",
       "args": ["-y", "@lotfihoc/ado-on-prem-mcp", "${input:ado_org}", "-d", "core", "work", "work-items"]
+      "env": {
+        "LOG_LEVEL": "info",
+        "ADO_MCP_MODE": "onprem",
+        "ADO_MCP_AUTH_TYPE": "basic",
+        "ADO_MCP_ORG_URL": "https://<on-prem-host>/tfs/<collection_name>",
+        "ADO_MCP_API_VERSION": "6.0",
+        "ADO_MCP_BATCH_API_VERSION": "6.0",
+        "ADO_MCP_MARKDOWN_COMMENTS_API_VERSION": "5.0",
+        "NODE_EXTRA_CA_CERTS": "<path_to_cert>",
+        "ADO_MCP_AUTH_TOKEN": "<your_ado_pat>"
+      }
     }
   }
 }
+
 ```
 
 Domains that are available are: `core`, `work`, `work-items`, `search`, `test-plans`, `repositories`, `wiki`, `pipelines`, `advanced-security`
 
 We recommend that you always enable `core` tools so that you can fetch project level information.
 
-> By default all domains are loaded
+If you are using continiue dev, you can use the following config
+
+```yml
+mcpServers:
+  - name: ado-on-prem-mcp-domains
+    type: stdio
+    command: npx
+    args:
+      - -y
+      - "@lotfihoc/ado-on-prem-mcp"
+      - "<your_devops_project_name>"
+      - "-d"
+      - "core"
+      - "work"
+      - "work-items"
+      - "--authentication"
+      - "envvar"
+    env:
+      LOG_LEVEL: "info"
+      ADO_MCP_MODE: "onprem"
+      ADO_MCP_AUTH_TYPE: "basic"
+      ADO_MCP_ORG_URL: "https://<on-prem-host>/tfs/<collection_name>"
+      ADO_MCP_API_VERSION: "6.0"
+      ADO_MCP_BATCH_API_VERSION: "6.0"
+      ADO_MCP_MARKDOWN_COMMENTS_API_VERSION: "5.0"
+      ADO_MCP_AUTH_TOKEN: ${{ secrets.ADO_TOKEN }}
+      NODE_EXTRA_CA_CERTS: ${{ secrets.NODE_EXTRA_CA_CERTS }}
+```
