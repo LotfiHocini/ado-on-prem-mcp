@@ -4,10 +4,6 @@ This project provides a lightweight server to interact with on-premises Azure De
 
 Forked from [web-marketing-hr](https://www.npmjs.com/package/@web-marketing-hr/azure-devops-mcp), which itself is a fork of [Microsoft's Azure DevOps MCP](https://github.com/microsoft/azure-devops-mcp)
 
-Forked from web-marketing-hr
-, which itself is a fork of Microsoft's Azure DevOps MCP
-.
-
 ### Environment variables
 
 - `ADO_MCP_AUTH_TOKEN`:
