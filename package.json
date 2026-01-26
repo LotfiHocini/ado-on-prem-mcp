@@ -3,14 +3,14 @@
   "version": "2.3.11",
   "description": "MCP server for interacting with Azure DevOps (on-premises) WEM fork",
   "license": "MIT",
-  "author": "Microsoft Corporation, WEB Marketing d.o.o. Fork",
-  "homepage": "https://github.com/WEB-Marketing-d-o-o/azure-devops-mcp",
+  "author": "Microsoft Corporation, WEB Marketing d.o.o. Fork, Lotfi Hoc",
+  "homepage": "https://github.com/LotfiHocini/ado-on-prem-mcp",
   "bugs": {
-    "url": "https://github.com/WEB-Marketing-d-o-o/azure-devops-mcp/issues"
+    "url": "https://github.com/LotfiHocini/ado-on-prem-mcp/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/WEB-Marketing-d-o-o/azure-devops-mcp.git"
+    "url": "git+https://github.com/LotfiHocini/ado-on-prem-mcp.git"
   },
   "type": "module",
   "bin": {

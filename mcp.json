@@ -10,7 +10,7 @@
     "ado_op": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@web-marketing-hr/azure-devops-mcp", "${input:ado_org}", "--authentication", "envvar"],
+      "args": ["-y", "@lotfihoc/azure-devops-mcp", "${input:ado_org}", "--authentication", "envvar"],
       "env": {
         "LOG_LEVEL": "debug",
         "ADO_MCP_MODE": "onprem",

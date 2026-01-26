@@ -4,15 +4,11 @@ Easily install the Azure DevOps MCP (WEM fork) Server for VS Code:
 
 [![Install with NPX in VS Code](https://img.shields.io/badge/VS_Code-Install_AzureDevops_MCP_Server-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=ado_op&config=%7B%20%22type%22%3A%20%22stdio%22%2C%20%22command%22%3A%20%22npx%22%2C%20%22args%22%3A%20%5B%22-y%22%2C%20%22%40web-marketing-hr%2Fazure-devops-mcp%22%2C%20%22_DEVOPS_PROJECT_NAME_HERE_%22%2C%20%22--authentication%22%2C%20%22envvar%22%5D%7D)
 
-This TypeScript project provides an MCP server for Azure DevOps, enabling you to perform a wide range of Azure DevOps tasks directly from your code editor.
-This WEB Marketing fork adds support for Azure DevOps Server (on-premises).
+This TypeScript project provides an MCP server for Azure DevOps On-Premise, enabling you to perform a wide range of Azure DevOps tasks directly from your code editor.
+This fork aims to interact with Azure DevOps Server (on-premises) in the context of test.
 
-## WEB Marketing fork goals
 
-1. Add support for Azure DevOps Server (on-premises)
-2. Add support for configuring API versions to work with older Azure DevOps Server releases
-
-### Added Environment variables
+### Environment variables
 
 - `ADO_MCP_AUTH_TOKEN`:
   - DevOps Personal Access Token (PAT)
@@ -45,19 +41,46 @@ You can set environment variables in `mcp.json`, for example:
     "ado_op": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@web-marketing-hr/azure-devops-mcp", "<your_devops_project_name>", "--authentication", "envvar"],
+      "args": ["-y", "@lotfihoc/ado-on-prem-mcp", "<your_devops_project_name>", "--authentication", "envvar"],
       "env": {
         "LOG_LEVEL": "info",
         "ADO_MCP_MODE": "onprem",
         "ADO_MCP_AUTH_TYPE": "basic",
         "ADO_MCP_ORG_URL": "https://<on-prem-host>/tfs/<collection_name>",
-        "ADO_MCP_API_VERSION": "6.0-preview",
-        "ADO_MCP_BATCH_API_VERSION": "5.0",
-        "ADO_MCP_MARKDOWN_COMMENTS_API_VERSION": "5.0"
+        "ADO_MCP_API_VERSION": "6.0",
+        "ADO_MCP_BATCH_API_VERSION": "6.0",
+        "ADO_MCP_MARKDOWN_COMMENTS_API_VERSION": "5.0",
+        "NODE_EXTRA_CA_CERTS": "your_cert_path", // make this availble system wide if needed
+        "ADO_MCP_AUTH_TOKEN":  "your_ado_pat"// make this availble system wide
+
       }
     }
   }
 }
+```
+
+If you are using continue dev on vscode, you can use this config
+```yaml
+mcpServers:
+  - name: ADO MCP
+    type: stdio
+    command: npx
+    args:
+      - -y
+      - "@lotfihoc/ado-on-prem-mcp"
+      - "<your_devops_project_name>"
+      - "--authentication"
+      - "envvar"
+    env:
+      LOG_LEVEL: "info"
+      ADO_MCP_MODE: "onprem"
+      ADO_MCP_AUTH_TYPE: "basic"
+      ADO_MCP_ORG_URL:  "https://<on-prem-host>/tfs/<collection_name>"
+      ADO_MCP_API_VERSION: "6.0"
+      ADO_MCP_BATCH_API_VERSION: "6.0"
+      ADO_MCP_MARKDOWN_COMMENTS_API_VERSION: "5.0"
+      ADO_MCP_AUTH_TOKEN:  ${{ secrets.ADO_TOKEN }}
+      NODE_EXTRA_CA_CERTS: ${{ secrets.NODE_EXTRA_CA_CERTS }}
 ```
 
 It's recommended to set `ADO_MCP_AUTH_TOKEN` in your terminal or command line. Windows example:
@@ -140,20 +163,20 @@ In your project, add a `.vscode\mcp.json` file with the following content:
     {
       "id": "ado_org",
       "type": "promptString",
-      "description": "Azure DevOps organization name  (e.g. 'contoso')"
+      "description": "Azure DevOps organization name"
     }
   ],
   "servers": {
     "ado": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@web-marketing-hr/azure-devops-mcp", "${input:ado_org}"]
+      "args": ["-y", "@lotfihoc/azure-devops-mcp", "${input:ado_org}"]
     }
   }
 }
 ```
 
-🔥 To stay up to date with the latest features, you can use our nightly builds. Simply update your `mcp.json` configuration to use `@web-marketing-hr/azure-devops-mcp@next`. Here is an updated example:
+🔥 To stay up to date with the latest features, you can use our nightly builds. Simply update your `mcp.json` configuration to use `@lotfihoc/ado-on-prem-mcp@next`. Here is an updated example:
 
 ```json
 {
@@ -161,14 +184,14 @@ In your project, add a `.vscode\mcp.json` file with the following content:
     {
       "id": "ado_org",
       "type": "promptString",
-      "description": "Azure DevOps organization name  (e.g. 'contoso')"
+      "description": "Azure DevOps organization name"
     }
   ],
   "servers": {
     "ado": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@web-marketing-hr/azure-devops-mcp@next", "${input:ado_org}"]
+      "args": ["-y", "@lotfihoc/ado-on-prem-mcp@next", "${input:ado_org}"]
     }
   }
 }
@@ -210,7 +233,7 @@ For example, use `"-d", "core", "work", "work-items"` to load only Work Item rel
     "ado_with_filtered_domains": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@web-marketing-hr/azure-devops-mcp", "${input:ado_org}", "-d", "core", "work", "work-items"]
+      "args": ["-y", "@lotfihoc/ado-on-prem-mcp", "${input:ado_org}", "-d", "core", "work", "work-items"]
     }
   }
 }
@@ -221,55 +244,3 @@ Domains that are available are: `core`, `work`, `work-items`, `search`, `test-pl
 We recommend that you always enable `core` tools so that you can fetch project level information.
 
 > By default all domains are loaded
-
-## 📝 Troubleshooting
-
-See the [Troubleshooting guide](./docs/TROUBLESHOOTING.md) for help with common issues and logging.
-
-## 🎩 Examples & Best Practices
-
-Explore example prompts in our [Examples documentation](./docs/EXAMPLES.md).
-
-For best practices and tips to enhance your experience with the MCP Server, refer to the [How-To guide](./docs/HOWTO.md).
-
-## 🙋‍♀️ Frequently Asked Questions
-
-For answers to common questions about the Azure DevOps MCP Server, see the [Frequently Asked Questions](./docs/FAQ.md).
-
-## 📌 Contributing
-
-We welcome contributions! During preview, please file issues for bugs, enhancements, or documentation improvements.
-
-See our [Contributions Guide](./CONTRIBUTING.md) for:
-
-- 🛠️ Development setup
-- ✨ Adding new tools
-- 📝 Code style & testing
-- 🔄 Pull request process
-
-## 🤝 Code of Conduct
-
-This project follows the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For questions, see the [FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [open@microsoft.com](mailto:open@microsoft.com).
-
-## 📈 Project Stats
-
-[![Star History Chart](https://api.star-history.com/svg?repos=microsoft/azure-devops-mcp&type=Date)](https://star-history.com/#microsoft/azure-devops-mcp)
-
-## 🏆 Hall of Fame
-
-Thanks to all contributors who make this project awesome! ❤️
-
-[![Contributors](https://contrib.rocks/image?repo=microsoft/azure-devops-mcp)](https://github.com/microsoft/azure-devops-mcp/graphs/contributors)
-
-> Generated with [contrib.rocks](https://contrib.rocks)
-
-## License
-
-Licensed under the [MIT License](./LICENSE.md).
-
----
-
-_Trademarks: This project may include trademarks or logos for Microsoft or third parties. Use of Microsoft trademarks or logos must follow [Microsoft’s Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general). Third-party trademarks are subject to their respective policies._
-
-<!-- version: 2023-04-07 [Do not delete this line, it is used for analytics that drive template improvements] -->
