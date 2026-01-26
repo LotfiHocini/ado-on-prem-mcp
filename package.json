@@ -1,5 +1,5 @@
 {
-  "name": "@lotfihoc/azure-devops-mcp",
+  "name": "@lotfihoc/ado-on-prem-mcp",
   "version": "2.3.11",
   "description": "MCP server for interacting with Azure DevOps (on-premises) WEM fork",
   "license": "MIT",
@@ -14,7 +14,7 @@
   },
   "type": "module",
   "bin": {
-    "mcp-server-azuredevops-op": "dist/index.js"
+    "ado-on-prem-mcp": "dist/index.js"
   },
   "files": [
     "dist"
@@ -73,7 +73,7 @@
       "npm run format"
     ]
   },
-  "main": "index.js",
+  "main": "dist/index.js",
   "directories": {
     "doc": "docs",
     "test": "test"

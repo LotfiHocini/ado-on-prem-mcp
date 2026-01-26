@@ -7,7 +7,6 @@ Easily install the Azure DevOps MCP (WEM fork) Server for VS Code:
 This TypeScript project provides an MCP server for Azure DevOps On-Premise, enabling you to perform a wide range of Azure DevOps tasks directly from your code editor.
 This fork aims to interact with Azure DevOps Server (on-premises) in the context of test.
 
-
 ### Environment variables
 
 - `ADO_MCP_AUTH_TOKEN`:
@@ -20,7 +19,7 @@ This fork aims to interact with Azure DevOps Server (on-premises) in the context
   - `"bearer"` (default) or `"basic"`
 - `ADO_MCP_ORG_URL`:
   - Full URL of the on-premises instance, for example:
-    `https://my-server/tfs/MyCollection` or `https://devops.moja-firma.hr/MyCollection`
+    `https://my-server/tfs/MyCollection`
 - `ADO_MCP_API_VERSION`:
   - Set Azure DevOps API version
   - default: `"6.0-preview"`
@@ -51,8 +50,7 @@ You can set environment variables in `mcp.json`, for example:
         "ADO_MCP_BATCH_API_VERSION": "6.0",
         "ADO_MCP_MARKDOWN_COMMENTS_API_VERSION": "5.0",
         "NODE_EXTRA_CA_CERTS": "your_cert_path", // make this availble system wide if needed
-        "ADO_MCP_AUTH_TOKEN":  "your_ado_pat"// make this availble system wide
-
+        "ADO_MCP_AUTH_TOKEN": "your_ado_pat" // make this availble system wide
       }
     }
   }
@@ -60,9 +58,10 @@ You can set environment variables in `mcp.json`, for example:
 ```
 
 If you are using continue dev on vscode, you can use this config
+
 ```yaml
 mcpServers:
-  - name: ADO MCP
+  - name: ado-on-prem-mcp
     type: stdio
     command: npx
     args:
@@ -75,11 +74,11 @@ mcpServers:
       LOG_LEVEL: "info"
       ADO_MCP_MODE: "onprem"
       ADO_MCP_AUTH_TYPE: "basic"
-      ADO_MCP_ORG_URL:  "https://<on-prem-host>/tfs/<collection_name>"
+      ADO_MCP_ORG_URL: "https://<on-prem-host>/tfs/<collection_name>"
       ADO_MCP_API_VERSION: "6.0"
       ADO_MCP_BATCH_API_VERSION: "6.0"
       ADO_MCP_MARKDOWN_COMMENTS_API_VERSION: "5.0"
-      ADO_MCP_AUTH_TOKEN:  ${{ secrets.ADO_TOKEN }}
+      ADO_MCP_AUTH_TOKEN: ${{ secrets.ADO_TOKEN }}
       NODE_EXTRA_CA_CERTS: ${{ secrets.NODE_EXTRA_CA_CERTS }}
 ```
 
@@ -170,7 +169,7 @@ In your project, add a `.vscode\mcp.json` file with the following content:
     "ado": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@lotfihoc/azure-devops-mcp", "${input:ado_org}"]
+      "args": ["-y", "@lotfihoc/ado-on-prem-mcp", "${input:ado_org}"]
     }
   }
 }
