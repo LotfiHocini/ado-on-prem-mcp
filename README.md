@@ -229,3 +229,5 @@ mcpServers:
       ADO_MCP_AUTH_TOKEN: ${{ secrets.ADO_TOKEN }}
       NODE_EXTRA_CA_CERTS: ${{ secrets.NODE_EXTRA_CA_CERTS }}
 ```
+
+Don't forget to create `.env` in `.continue` folder to user secrets
