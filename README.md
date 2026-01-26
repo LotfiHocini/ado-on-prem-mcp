@@ -1,11 +1,12 @@
-# ⭐ Azure DevOps MCP Server (WEM fork)
+# ⭐ Azure DevOps On-Premise MCP Server
 
-Easily install the Azure DevOps MCP (WEM fork) Server for VS Code:
+This project provides a lightweight server to interact with on-premises Azure DevOps, enabling automation, project management, and streamlined workflows.
 
-[![Install with NPX in VS Code](https://img.shields.io/badge/VS_Code-Install_AzureDevops_MCP_Server-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=ado_op&config=%7B%20%22type%22%3A%20%22stdio%22%2C%20%22command%22%3A%20%22npx%22%2C%20%22args%22%3A%20%5B%22-y%22%2C%20%22%40web-marketing-hr%2Fazure-devops-mcp%22%2C%20%22_DEVOPS_PROJECT_NAME_HERE_%22%2C%20%22--authentication%22%2C%20%22envvar%22%5D%7D)
+Forked from [web-marketing-hr](https://www.npmjs.com/package/@web-marketing-hr/azure-devops-mcp), which itself is a fork of [Microsoft's Azure DevOps MCP](https://github.com/microsoft/azure-devops-mcp)
 
-This TypeScript project provides an MCP server for Azure DevOps On-Premise, enabling you to perform a wide range of Azure DevOps tasks directly from your code editor.
-This fork aims to interact with Azure DevOps Server (on-premises) in the context of test.
+Forked from web-marketing-hr
+, which itself is a fork of Microsoft's Azure DevOps MCP
+.
 
 ### Environment variables
 
